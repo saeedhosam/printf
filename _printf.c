@@ -17,23 +17,33 @@ int _printf(const char *format, ...)
 	va_list args;
 
 	va_start(args, format);
-
 	for (i = 0; i < _strlen(format); i++)
 	{
 		if (format[i] == '%')
 		{
 			if (format[i + 1] == 'c')
+			{
 				spec_c(args);
+				i++;
+			}
 			else if (format[i + 1] == 's')
+			{
 				spec_s(args);
+				i++;
+			}
 			else if (format[i + 1] == '%')
 			{
 				j = 1;
 				write(1, &format[i], 1);
+				i++;
 			}
 			else if (format[i + 1] == 'i' || format[i + 1] == 'd')
+			{
 				spec_base10(args);
-			i++;
+				i++;
+			}
+			else
+				write(1, &format[i], 1);
 		}
 		else
 			write(1, &format[i], 1);

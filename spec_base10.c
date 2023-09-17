@@ -15,15 +15,19 @@ void spec_base10(va_list args)
 	int n = va_arg(args, int);
 	int i, j, k, y = n, minus = n;
 	char *numstr;
-	char c = '-';
+	char c = '-', zero = '0';
 
+	if (n == -2147483648)
+		n = n - 1;
+	if (n == 0)
+		write(1, &zero, 1);
 	if (n < 0)
 		n *= -1;
 
 	for (k = 0; y != 0; k++)
 		y = y / 10;
 
-	numstr = malloc(sizeof(char) * k + 1);
+	numstr = malloc(sizeof(char) * k - 2);
 
 	for (i = 0; n != 0; i++)
 	{
@@ -41,6 +45,9 @@ void spec_base10(va_list args)
 
 	if (minus < 0)
 		write(1, &c, 1);
+
+	if (minus == -2147483648)
+		numstr[k - 1] += 1;
 
 	write(1, numstr, k);
 	free(numstr);

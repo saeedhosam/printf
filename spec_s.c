@@ -12,7 +12,11 @@
 void spec_s(va_list args)
 {
 	char *s;
+	char *null = "(null)";
 
 	s = va_arg(args, char *);
-	write(1, s, _strlen(s));
+	if (s != NULL)
+		write(1, s, _strlen(s));
+	else
+		write(1, null, 6);
 }
