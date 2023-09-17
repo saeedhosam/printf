@@ -27,7 +27,11 @@ void spec_base10(va_list args)
 	for (k = 0; y != 0; k++)
 		y = y / 10;
 
+<<<<<<< HEAD
 	numstr = malloc(sizeof(char) * k - 2);
+=======
+	numstr = malloc(sizeof(char) * k);
+>>>>>>> 7b4c131c4e7c27ea71ed26d065c545696304ed09
 
 	for (i = 0; n != 0; i++)
 	{
