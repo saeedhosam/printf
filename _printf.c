@@ -13,13 +13,12 @@
 */
 int _printf(const char *format, ...)
 {
-	int charsnum = 1, nn, i;
+	unsigned int i;
+	int charsnum = 1, nn;
 	char *ss;
 	va_list args;
 
 	va_start(args, format);
-	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
-	return (-1);
 	for (i = 0; format[i]; i++)
 	{
 		if (format[i] == '%')
@@ -27,7 +26,8 @@ int _printf(const char *format, ...)
 			i++;
 			if (format[i] == 'c')
 			{
-				spec_c(args, charsnum);
+				charsnum++;
+				spec_c(args);
 			}
 			else if (format[i] == 's')
 			{
