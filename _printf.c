@@ -13,25 +13,33 @@ int _printf(const char *format, ...)
 	if (format == NULL)
 	return (-1);
 	va_start(args, format);
-
-	for (i = 0; i < _strlen(format); i++)
+	for (i = 0; format[i]; i++)
 	{
 		if (format[i] != '%')
 		{
-			if (format[i + 1] == 'c')
-				spec_c(args);
-			else if (format[i + 1] == 's')
-				spec_s(args);
-			else if (format[i + 1] == '%')
-			{
-				write(1, &format[i], 1);
-			}
-			else if (format[i + 1] == 'i' || format[i + 1] == 'd')
-				spec_base10(args);
-			i++;
+			ch++;
+			write(1, &format[i], 1);
 		}
 		else
-			write(1, &format[i], 1);
+		{
+			i++;
+			if (format[i] == '\0')
+				break;
+			if (format[i] == '%')
+			{
+				write(1, &format[i], 1);
+				ch++;
+			}
+			else if (format[i] == 'c')
+			{
+				spec_c(args, ch);
+			}
+			else if (format[i] == 's')
+			{
+				spec_s(args, len);
+				ch += len;
+			}
+		}
 	}
 	va_end(args);
 	return (ch);
