@@ -13,13 +13,13 @@
 */
 int _printf(const char *format, ...)
 {
-	unsigned int i;
-	int charsnum;
-	int nn;
+	int charsnum = 0, nn, i = 0;
 	char *ss;
 	va_list args;
 
 	va_start(args, format);
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+	return (-1);
 	for (i = 0; format[i]; i++)
 	{
 		if (format[i] == '%')
@@ -27,8 +27,7 @@ int _printf(const char *format, ...)
 			i++;
 			if (format[i] == 'c')
 			{
-				charsnum++;
-				spec_c(args);
+				spec_c(args, charsnum);
 			}
 			else if (format[i] == 's')
 			{
@@ -41,6 +40,10 @@ int _printf(const char *format, ...)
 				nn = va_arg(args, int);
 				spec_base10(nn);
 			}
+			else if (format[i] == '%')
+			{
+				print_37(charsnum);
+			}
 		}
 		else
 		{
@@ -48,7 +51,6 @@ int _printf(const char *format, ...)
 			charsnum++;
 		}
 	}
-
 	va_end(args);
 	return (charsnum);
 }
