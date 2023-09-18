@@ -1,24 +1,15 @@
-#include <stdarg.h>
-#include <unistd.h>
 #include "main.h"
 
 /**
- * spec_s - prints the %s format specifier
- *
- * @args: from the variadic functions macros
- *
- * Return: nothing.
+ * spec_s - string printer
+ * @args: list
+ * @len: int
 */
-void spec_s(va_list args)
+void spec_s(va_list args, int len)
 {
-	char *s;
-	char *null = "(null)";
+	char *s = va_arg(args, char *);
 
-	s = va_arg(args, char *);
-	if (s != NULL)
-	{
-	write(1, s, _strlen(s));
-	}
-	else
-	write(1, null, 6);
+		while (s[len] != '\0')
+		len++;
+		write(1, s, len);
 }

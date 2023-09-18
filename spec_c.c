@@ -1,17 +1,14 @@
-#include <stdarg.h>
-#include <unistd.h>
+#include "main.h"
 
 /**
- * spec_c - prints the %c format specifier
- *
- * @args: from the variadic functions macros
- *
- * Return: nothing.
+ * spec_c - char
+ * @args: list
+ * @ch: int
 */
-void spec_c(va_list args)
+void spec_c(va_list args, int ch)
 {
-	char c;
+	char c = va_arg(args, int);
 
-	c = va_arg(args, int);
 	write(1, &c, 1);
+	ch++;
 }
