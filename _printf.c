@@ -1,46 +1,46 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
 #include "main.h"
 
 /**
- * _printf - A custome function identical to the popular printf
- *
- * @format: text to be printed on terminal
- *
- * Return: 0 on Success.
+ * _printf - my printf function
+ * @format: const string
+ * Return: the number of characters printed
 */
 int _printf(const char *format, ...)
 {
-	unsigned int i, j = 0;
+	int i, ch = 0, len = 0;
 	va_list args;
 
+	if (format == NULL)
+	return (-1);
 	va_start(args, format);
-
-	for (i = 0; i < _strlen(format); i++)
+	for (i = 0; format[i]; i++)
 	{
-		if (format[i] == '%')
+		if (format[i] != '%')
 		{
-			if (format[i + 1] == 'c')
-				spec_c(args);
-			else if (format[i + 1] == 's')
-				spec_s(args);
-			else if (format[i + 1] == '%')
-			{
-				j = 1;
-				write(1, &format[i], 1);
-			}
-			else if (format[i + 1] == 'i' || format[i + 1] == 'd')
-				spec_base10(args);
-			i++;
+			ch++;
+			write(1, &format[i], 1);
 		}
 		else
-			write(1, &format[i], 1);
+		{
+			i++;
+			if (format[i] == '\0')
+				break;
+			if (format[i] == '%')
+			{
+				write(1, &format[i], 1);
+				ch++;
+			}
+			else if (format[i] == 'c')
+			{
+				spec_c(args, ch);
+			}
+			else if (format[i] == 's')
+			{
+				spec_s(args, len);
+				ch += len;
+			}
+		}
 	}
-
 	va_end(args);
-	if (j == 1)
-		return (_strlen(format) - 1);
-	return (_strlen(format));
+	return (ch);
 }
