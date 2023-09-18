@@ -6,7 +6,7 @@
 int _strlen(char *ss);
 void spec_c(va_list args);
 void spec_s(char *ss);
-void spec_base10(int nn);
+int spec_base10(int nn);
 int _printf(const char *format, ...);
 
 #endif
