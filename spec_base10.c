@@ -6,49 +6,25 @@
 /**
  * spec_base10 - prints the %d and &i format specifier
  *
- * @args: from the variadic functions macros
+ * @nn: the integer needs to be implemented
  *
  * Return: nothing.
 */
-void spec_base10(va_list args)
+void spec_base10(int nn)
 {
-	int n = va_arg(args, int);
-	int i, j, k, y = n, minus = n;
-	char *numstr;
-	char c = '-', zero = '0';
+	int pntd;
+	char minus = '-';
 
-	if (n == -2147483648)
-		n = n - 1;
-	if (n == 0)
-		write(1, &zero, 1);
-	if (n < 0)
-		n *= -1;
-
-	for (k = 0; y != 0; k++)
-		y = y / 10;
-
-	numstr = malloc(sizeof(char) * k - 2);
-
-	for (i = 0; n != 0; i++)
+	if (nn < 0)
 	{
-		numstr[i] = n % 10 + '0';
-		n = n / 10;
+		nn = nn * -1;
+		write(1, &minus, 1);
 	}
 
-	for (j = 0; j < i / 2; j++)
-	{
-		char c = numstr[j];
+	if (nn > 9)
+		spec_base10(nn / 10);
 
-		numstr[j] = numstr[i - j - 1];
-		numstr[i - j - 1] = c;
-	}
+	pntd = '0' + (nn % 10);
 
-	if (minus < 0)
-		write(1, &c, 1);
-
-	if (minus == -2147483648)
-		numstr[k - 1] += 1;
-
-	write(1, numstr, k);
-	free(numstr);
+	write(1, &pntd, 1);
 }

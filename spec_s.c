@@ -1,15 +1,18 @@
+#include <stdarg.h>
+#include <unistd.h>
 #include "main.h"
 
 /**
- * spec_s - string printer
- * @args: list
- * @len: int
+ * spec_s - prints the %s format specifier
+ *
+ * @ss: the string needs to be printed lol
+ *
+ * Return: nothing.
 */
-void spec_s(va_list args, int len)
+void spec_s(char *ss)
 {
-	char *s = va_arg(args, char *);
+	int i;
 
-		while (s[len] != '\0')
-		len++;
-		write(1, s, len);
+	for (i = 0; ss[i]; i++)
+		write(1, &ss[i], 1);
 }

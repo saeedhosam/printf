@@ -1,48 +1,54 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
 #include "main.h"
 
 /**
- * _printf - my printf function
- * @format: const string
- * Return: the number of characters printed
+ * _printf - A custome function identical to the popular printf
+ *
+ * @format: text to be printed on terminal
+ *
+ * Return: 0 on Success.
 */
 int _printf(const char *format, ...)
 {
-	int i, ch = 0, len = 0;
+	unsigned int i;
+	int charsnum;
+	int nn;
+	char *ss;
 	va_list args;
 
-	if (format == NULL)
-	return (-1);
 	va_start(args, format);
-	if ((format[0] == '%' && format[1] == '\0'))
-	return (-1);
-	for (i = 0; format[i] != '\0'; i++)
+	for (i = 0; format[i]; i++)
 	{
-		if (format[i] != '%')
-		{
-			ch++;
-			write(1, &format[i], 1);
-		}
-		else
+		if (format[i] == '%')
 		{
 			i++;
-			if (format[i] == '\0')
-				break;
-			if (format[i] == '%')
+			if (format[i] == 'c')
 			{
-				write(1, &format[i], 1);
-				ch++;
-			}
-			else if (format[i] == 'c')
-			{
-				spec_c(args, ch);
+				charsnum++;
+				spec_c(args);
 			}
 			else if (format[i] == 's')
 			{
-				spec_s(args, len);
-				ch += len;
+				ss = va_arg(args, char *);
+				charsnum = charsnum + _strlen(ss);
+				spec_s(ss);
+			}
+			else if (format[i] == 'i' || format[i] == 'd')
+			{
+				nn = va_arg(args, int);
+				spec_base10(nn);
 			}
 		}
+		else
+		{
+			write(1, &format[i], 1);
+			charsnum++;
+		}
 	}
+
 	va_end(args);
-	return (ch);
+	return (charsnum);
 }
