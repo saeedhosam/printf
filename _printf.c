@@ -13,7 +13,7 @@
 */
 int _printf(const char *format, ...)
 {
-	int charsnum = 0, nn, i = 0;
+	int charsnum = 1, nn, i;
 	char *ss;
 	va_list args;
 
