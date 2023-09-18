@@ -14,7 +14,8 @@
 int _printf(const char *format, ...)
 {
 	unsigned int i;
-	int charsnum = 1, nn;
+	int charsnum = 0;
+	int nn;
 	char *ss;
 	va_list args;
 
@@ -40,10 +41,6 @@ int _printf(const char *format, ...)
 				nn = va_arg(args, int);
 				spec_base10(nn);
 			}
-			else if (format[i] == '%')
-			{
-				print_37(charsnum);
-			}
 		}
 		else
 		{
@@ -51,6 +48,7 @@ int _printf(const char *format, ...)
 			charsnum++;
 		}
 	}
+
 	va_end(args);
 	return (charsnum);
 }
