@@ -28,26 +28,22 @@ int _printf(const char *format, ...)
 			{
 				charsnum++;
 				spec_c(args);
-			}
-			else if (format[i] == 's')
+			} else if (format[i] == 's')
 			{
 				ss = va_arg(args, char *);
 				charsnum = charsnum + _strlen(ss);
 				spec_s(ss);
-			}
-			else if (format[i] == 'i' || format[i] == 'd')
+			} else if (format[i] == 'i' || format[i] == 'd')
 			{
 				nn = va_arg(args, int);
 				charsnum = charsnum + spec_base10(nn);
-			}
-			else
+			} else
 			{
 				write(1, &format[i - 1], 1);
 				write(1, &format[i], 1);
 				charsnum++;
 			}
-		}
-		else
+		} else
 		{
 			write(1, &format[i], 1);
 			charsnum++;
