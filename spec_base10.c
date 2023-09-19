@@ -12,7 +12,7 @@
 */
 int spec_base10(int nn)
 {
-	int pntd, charsnum = 0;
+	int pntd, charsnum = 0, wut = nn;
 	char minus = '-';
 
 	if (nn == -2147483648)
@@ -31,11 +31,13 @@ int spec_base10(int nn)
 
 	if (nn > 9)
 	{
-		spec_base10(nn / 10);
-		charsnum++;
+		charsnum = charsnum + spec_base10(nn / 10);
 	}
 
-	pntd = '0' + (nn % 10);
+	if (wut == -2147483648)
+		pntd = '0' + (nn % 10) + 1;
+	else
+		pntd = '0' + (nn % 10);
 
 	write(1, &pntd, 1);
 	charsnum++;

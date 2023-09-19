@@ -14,8 +14,7 @@
 int _printf(const char *format, ...)
 {
 	unsigned int i;
-	int charsnum = 0;
-	int nn;
+	int charsnum = 0, nn;
 	char *ss;
 	va_list args;
 
@@ -39,7 +38,13 @@ int _printf(const char *format, ...)
 			else if (format[i] == 'i' || format[i] == 'd')
 			{
 				nn = va_arg(args, int);
-				spec_base10(nn);
+				charsnum = charsnum + spec_base10(nn);
+			}
+			else
+			{
+				write(1, &format[i - 1], 1);
+				write(1, &format[i], 1);
+				charsnum++;
 			}
 		}
 		else
