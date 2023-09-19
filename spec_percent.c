@@ -6,7 +6,7 @@
  *
  * Return: int.
 */
-int spec_percent()
+int spec_percent(void)
 {
 	int charsnum = 0;
 
