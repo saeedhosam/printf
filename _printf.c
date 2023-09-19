@@ -13,8 +13,7 @@
 */
 int _printf(const char *format, ...)
 {
-	unsigned int i;
-	int charsnum = 0, nn;
+	int i, charsnum = 0, nn;
 	char *ss;
 	va_list args;
 
@@ -37,6 +36,10 @@ int _printf(const char *format, ...)
 			{
 				nn = va_arg(args, int);
 				charsnum = charsnum + spec_base10(nn);
+			} else if (format[i] == '%')
+			{
+				write(1, "%", 1);
+				charsnum++;
 			} else
 			{
 				write(1, &format[i - 1], 1);
@@ -49,7 +52,6 @@ int _printf(const char *format, ...)
 			charsnum++;
 		}
 	}
-
 	va_end(args);
 	return (charsnum);
 }
