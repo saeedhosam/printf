@@ -13,8 +13,8 @@
 */
 int _printf(const char *format, ...)
 {
-	int i, charsnum = 0, nn;
-	char *ss;
+	int i;
+	int charsnum = 0, nn;
 	va_list args;
 
 	va_start(args, format);
@@ -24,27 +24,20 @@ int _printf(const char *format, ...)
 		{
 			i++;
 			if (format[i] == 'c')
-			{
-				charsnum++;
-				spec_c(args);
-			} else if (format[i] == 's')
-			{
-				ss = va_arg(args, char *);
-				charsnum = charsnum + _strlen(ss);
-				spec_s(ss);
-			} else if (format[i] == 'i' || format[i] == 'd')
+				charsnum = charsnum + spec_c(args);
+			else if (format[i] == 's')
+				charsnum = charsnum + spec_s(args);
+			else if (format[i] == 'i' || format[i] == 'd')
 			{
 				nn = va_arg(args, int);
 				charsnum = charsnum + spec_base10(nn);
 			} else if (format[i] == '%')
-			{
-				write(1, "%", 1);
-				charsnum++;
-			} else
+				charsnum = charsnum + spec_percent();
+			else
 			{
 				write(1, &format[i - 1], 1);
 				write(1, &format[i], 1);
-				charsnum++;
+				charsnum = charsnum + 2;
 			}
 		} else
 		{
@@ -52,6 +45,7 @@ int _printf(const char *format, ...)
 			charsnum++;
 		}
 	}
+
 	va_end(args);
 	return (charsnum);
 }
